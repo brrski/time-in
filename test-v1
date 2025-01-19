@@ -1,0 +1,44 @@
+// Import necessary modules
+import SwiftUI
+
+@main
+struct TimeInAccraApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+
+struct ContentView: View {
+    // A Timer to update the time every second
+    @State private var currentTime: String = getCurrentTime()
+
+    var body: some View {
+        VStack {
+            Text("Current Time in Accra")
+                .font(.largeTitle)
+                .padding()
+
+            Text(currentTime)
+                .font(.system(size: 50, weight: .bold, design: .monospaced))
+                .padding()
+
+            Spacer()
+        }
+        .onAppear {
+            // Start the timer to update the time every second
+            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+                currentTime = getCurrentTime()
+            }
+        }
+    }
+}
+
+// Helper function to get the current time in Accra
+def getCurrentTime() -> String {
+    let formatter = DateFormatter()
+    formatter.timeZone = TimeZone(identifier: "Africa/Accra")
+    formatter.timeStyle = .medium
+    return formatter.string(from: Date())
+}
